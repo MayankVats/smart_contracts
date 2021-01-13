@@ -6,7 +6,7 @@ contract TokenFactory {
     mapping(string => Token) public tokens;
     
     function createToken(string memory _name, string memory _symbol, uint8 _decimals) external {
-        Token _token = new Token(_name, _symbol, _decimals);
+        Token _token = new Token(_name, _symbol, _decimals, msg.sender);
         tokens[_name] = _token;
     }
     
@@ -18,6 +18,8 @@ contract Token {
     string  public symbol;
     uint256 public totalSupply = 10000000000000000000000000; // 10 million tokens
     uint8   public decimals;
+    
+    address public owner;
 
     event Transfer(
         address indexed _from,
@@ -39,12 +41,13 @@ contract Token {
     mapping(address => uint256) public balanceOf;
     mapping(address => mapping(address => uint256)) public allowance;
 
-    constructor(string memory _name, string memory _symbol, uint8 _decimals) public {
+    constructor(string memory _name, string memory _symbol, uint8 _decimals, address _owner) public {
         name = _name;
         symbol = _symbol;
         decimals = _decimals;
-        balanceOf[msg.sender] = totalSupply;
-        emit Creation(msg.sender, totalSupply);
+        owner = _owner;
+        balanceOf[owner] = totalSupply;
+        emit Creation(owner, totalSupply);
     }
 
     function transfer(address _to, uint256 _value) public returns (bool success) {
