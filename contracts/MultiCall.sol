@@ -19,14 +19,14 @@ contract TestMultiCall {
         return (2, block.timestamp);
     }
 
-    function getData1() external pure returns(bytes memory) {
-      // abi.encodeWithSignature("func1()");
-      return abi.encodeWithSelector(this.func1.selector);
+    function getData1() external pure returns (bytes memory) {
+        // abi.encodeWithSignature("func1()");
+        return abi.encodeWithSelector(this.func1.selector);
     }
 
-    function getData2() external pure returns(bytes memory) {
-      // abi.encodeWithSignature("func2 ()");
-      return abi.encodeWithSelector(this.func2.selector);
+    function getData2() external pure returns (bytes memory) {
+        // abi.encodeWithSignature("func2 ()");
+        return abi.encodeWithSelector(this.func2.selector);
     }
 }
 
