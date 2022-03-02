@@ -109,5 +109,4 @@ contract VerifySignature {
     }
 }
 
-
 // https://docs.metamask.io/guide/signing-data.html#signing-data-with-metamask
