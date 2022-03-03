@@ -6,7 +6,8 @@
   "author": "MayankVats <vats.2610@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "format": "npx prettier --write \"contracts/*.sol\""
+    "format": "npx prettier --write \"contracts/*.sol\"",
+    "connect": "remixd -s contracts --remix-ide https://remix.ethereum.org/"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.5.0",
