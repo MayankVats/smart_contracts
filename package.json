@@ -1,0 +1,11 @@
+{
+  "name": "smart_contracts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:MayankVats/smart_contracts.git",
+  "author": "MayankVats <vats.2610@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.5.0"
+  }
+}
