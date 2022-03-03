@@ -5,6 +5,9 @@
   "repository": "git@github.com:MayankVats/smart_contracts.git",
   "author": "MayankVats <vats.2610@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "format": "npx prettier --write \"contracts/*.sol\""
+  },
   "dependencies": {
     "@openzeppelin/contracts": "^4.5.0"
   }
