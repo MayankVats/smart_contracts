@@ -143,3 +143,15 @@ contract MultiSigWallet {
         }
     }
 }
+
+contract MultiSigWalletFactory {
+    event MultiSigWalletDeployed(address _wallet);
+
+    function deployWallet(address[] memory _owners, uint256 _approvalsRequired)
+        external
+    {
+        MultiSigWallet wallet = new MultiSigWallet(_owners, _approvalsRequired);
+
+        emit MultiSigWalletDeployed(address(wallet));
+    }
+}
