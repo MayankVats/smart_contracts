@@ -218,7 +218,11 @@ async function stringTest() {
   );
 }
 
-providerTest();
+async function signTest() {
+  // TODO:
+}
+
+// providerTest();
 // contractTest();
 // eventTest();
 // addressTest();
