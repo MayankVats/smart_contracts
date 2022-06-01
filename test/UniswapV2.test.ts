@@ -1,21 +1,28 @@
-const { ethers } = require("hardhat");
-const {
-  abi: routerABI,
-  address: routerAddress,
-} = require("../abis/UniswapV2RouterMainnet");
+import { ethers } from "hardhat";
+import {
+  abi as routerABI,
+  address as routerAddress,
+} from "../abis/UniswapV2RouterMainnet";
 
-const {
-  abi: factoryABI,
-  address: factoryAddress,
-} = require("../abis/UniswapV2FactoryMainnet");
+import {
+  abi as factoryABI,
+  address as factoryAddress,
+} from "../abis/UniswapV2FactoryMainnet";
+
+import {
+  abi as pairABI,
+  address as pairAddress,
+} from "../abis/UniswapV2PairMainnet";
 
 describe("Mainnet Test", () => {
-  let router;
-  let factory;
+  let router: any;
+  let factory: any;
+  let pair: any;
 
   beforeEach(async function () {
     router = await ethers.getContractAt(routerABI, routerAddress);
     factory = await ethers.getContractAt(factoryABI, factoryAddress);
+    pair = await ethers.getContractAt(pairABI, pairAddress);
   });
 
   describe("Uniswap V2 - Router", function () {
@@ -46,5 +53,25 @@ describe("Mainnet Test", () => {
     });
   });
 
-  describe("Uniswap V2 - Pair", function () {});
+  describe("Uniswap V2 - Pair", function () {
+    it("Get Reserves", async function () {
+      const reserves = await pair.getReserves();
+      console.log(
+        "🚀 ~ file: UniswapV2.test.js ~ line 59 ~ reserves",
+        reserves["_reserve0"],
+        reserves["_reserve1"]
+      );
+    });
+
+    it("Get Quotes", async function () {
+      const reserves = await pair.getReserves();
+
+      const quote = await router.quote(
+        ethers.utils.parseUnits("1", 6),
+        reserves["_reserve0"],
+        reserves["_reserve1"]
+      );
+      console.log("🚀 ~ file: UniswapV2.test.js ~ line 74 ~ quote", quote);
+    });
+  });
 });
