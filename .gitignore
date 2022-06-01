@@ -9,3 +9,7 @@ cache
 playground
 
 .env
+
+src
+
+coverage
