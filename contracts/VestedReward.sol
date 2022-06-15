@@ -14,6 +14,10 @@ contract VestedReward {
     }
     mapping(address => Reward) public rewards;
 
+    constructor(address _token) {
+        token = IERC20(_token);
+    }
+
     function createAllocation(
         address recipient,
         uint256 amountPerMonth,
