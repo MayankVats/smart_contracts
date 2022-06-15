@@ -4,28 +4,34 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract VestedReward {
-    IERC20 public token;
-
     struct Reward {
         uint256 amountPerMonth;
         uint256 months;
         uint256 amountDistributed;
         uint256 startTime;
+        IERC20 token;
     }
     mapping(address => Reward) public rewards;
 
-    constructor(address _token) {
-        token = IERC20(_token);
-    }
-
     function createAllocation(
-        address recipient,
-        uint256 amountPerMonth,
-        uint256 months
+        address _recipient,
+        uint256 _amountPerMonth,
+        uint256 _months,
+        address _token
     ) external {
-        token.transferFrom(msg.sender, address(this), amountPerMonth * months);
+        IERC20(_token).transferFrom(
+            msg.sender,
+            address(this),
+            _amountPerMonth * _months
+        );
 
-        rewards[recipient] = Reward(amountPerMonth, months, 0, block.timestamp);
+        rewards[_recipient] = Reward(
+            _amountPerMonth,
+            _months,
+            0,
+            block.timestamp,
+            IERC20(_token)
+        );
     }
 
     function distributeRewards(address recipient) external {
@@ -39,6 +45,6 @@ contract VestedReward {
         require(amountToDistribute > 0, "No rewards");
 
         reward.amountDistributed += amountToDistribute;
-        token.transfer(recipient, amountToDistribute);
+        reward.token.transfer(recipient, amountToDistribute);
     }
 }
