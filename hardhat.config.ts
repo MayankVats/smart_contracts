@@ -7,9 +7,11 @@ dotEnvConfig();
 
 const config: HardhatUserConfig = {
   solidity: "0.8.4",
+  defaultNetwork: "localhost",
   networks: {
     hardhat: {
-      forking: { url: process.env.MAINNET_API || "", blockNumber: 14877894 },
+      // forking: { url: process.env.MAINNET_API || "", blockNumber: 14877894 },
+      loggingEnabled: true,
     },
   },
   paths: {

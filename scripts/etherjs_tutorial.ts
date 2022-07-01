@@ -66,18 +66,28 @@ async function providerTest() {
 async function interfaceTest() {
   const FormatTypes = ethers.utils.FormatTypes;
 
-  const iface = new ethers.utils.Interface(TokenContractInfo.abi);
+  const iface = new ethers.utils.Interface(TestTokenContractInfo.abi);
 
   console.log(iface.format(FormatTypes.full));
   console.log(iface.format(FormatTypes.minimal));
 
-  console.log(
-    iface.encodeFunctionData("transferFrom", [
-      "0x8ba1f109551bD432803012645Ac136ddd64DBA72",
-      "0xaB7C8803962c0f2F5BBBe3FA8bf41cd82AA1923C",
-      ethers.utils.parseEther("1.0"),
-    ])
+  // console.log(
+  //   iface.encodeFunctionData("transferFrom", [
+  //     "0x8ba1f109551bD432803012645Ac136ddd64DBA72",
+  //     "0xaB7C8803962c0f2F5BBBe3FA8bf41cd82AA1923C",
+  //     ethers.utils.parseEther("1.0"),
+  //   ])
+  // );
+
+  console.log(iface.encodeFunctionData("totalAmountStaked", []));
+  console.log(iface.encodeFunctionData("rewardPerBlockForOthers", []));
+  console.log(iface.encodeFunctionData("rewardPerBlockForStaking", []));
+
+  const decodedData = ethers.utils.defaultAbiCoder.decode(
+    ["uint256"],
+    "0x000000000000000000000000000000000000000000000001ebcb4a7e7be7c000"
   );
+  console.log(decodedData.toString());
 }
 
 async function contractTest() {
@@ -96,43 +106,47 @@ async function contractTest() {
     TestTokenContractInfo.abi,
     wallet
   );
+  console.log(
+    "🚀 ~ file: etherjs_tutorial.js ~ line 99 ~ contractTest ~ TestToken",
+    TestToken
+  );
 
-  const totalSupply = await TestToken.totalSupply();
-  console.log(ethers.utils.formatEther(totalSupply));
+  // const totalSupply = await TestToken.totalSupply();
+  // console.log(ethers.utils.formatEther(totalSupply));
 
-  const balance = await TestToken.balanceOf(EOA);
-  console.log(ethers.utils.formatEther(balance));
+  // const balance = await TestToken.balanceOf(EOA);
+  // console.log(ethers.utils.formatEther(balance));
 
-  let txn;
-  try {
-    txn = await TestToken.mint(EOA, ethers.utils.parseEther("1.0"));
-    console.log(
-      "🚀 ~ file: etherjs_tutorial.js ~ line 109 ~ contractTest ~ txn",
-      txn
-    );
-  } catch (err) {
-    console.log(err);
-  }
+  // let txn;
+  // try {
+  //   txn = await TestToken.mint(EOA, ethers.utils.parseEther("1.0"));
+  //   console.log(
+  //     "🚀 ~ file: etherjs_tutorial.js ~ line 109 ~ contractTest ~ txn",
+  //     txn
+  //   );
+  // } catch (err) {
+  //   console.log(err);
+  // }
 
-  try {
-    txn = await TestToken.transferFrom(
-      "0x2E3c462e0884855650fDd8d44EA8fE7C097BaF9C",
-      "0x1A92CC5F41CfDBe0C153C901b782eBDe2e14c52f",
-      ethers.utils.parseEther("1.0")
-    );
-    console.log(
-      "🚀 ~ file: etherjs_tutorial.js ~ line 123 ~ contractTest ~ txn",
-      txn
-    );
-  } catch ({ error }) {
-    console.log(
-      "🚀 ~ file: etherjs_tutorial.js ~ line 128 ~ contractTest ~ error",
-      error
-    );
+  // try {
+  //   txn = await TestToken.transferFrom(
+  //     "0x2E3c462e0884855650fDd8d44EA8fE7C097BaF9C",
+  //     "0x1A92CC5F41CfDBe0C153C901b782eBDe2e14c52f",
+  //     ethers.utils.parseEther("1.0")
+  //   );
+  //   console.log(
+  //     "🚀 ~ file: etherjs_tutorial.js ~ line 123 ~ contractTest ~ txn",
+  //     txn
+  //   );
+  // } catch ({ error }) {
+  //   console.log(
+  //     "🚀 ~ file: etherjs_tutorial.js ~ line 128 ~ contractTest ~ error",
+  //     error
+  //   );
 
-    // const body = JSON.parse(error.error.body);
-    // console.log(body.error.message);
-  }
+  //   // const body = JSON.parse(error.error.body);
+  //   // console.log(body.error.message);
+  // }
 }
 
 async function addressTest() {
@@ -159,12 +173,12 @@ async function eventTest() {
 
   console.log(filter);
 
-  provider.on(filter, (result) => {
+  provider.on(filter, (result: any) => {
     console.log(result);
   });
   provider.on(
     { address: "0xe81db2b45cf9c1a93a32a29c5bbc177b028bfa6e" },
-    (result) => {
+    (result: any) => {
       console.log(result);
     }
   );
@@ -222,6 +236,7 @@ async function signTest() {
   // TODO:
 }
 
+// interfaceTest();
 // providerTest();
 // contractTest();
 // eventTest();
