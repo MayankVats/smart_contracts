@@ -13,3 +13,7 @@ playground
 src
 
 coverage
+
+coverage.json
+
+test.sol

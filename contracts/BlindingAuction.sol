@@ -51,6 +51,7 @@ contract BlindAuction {
         uint revealTime,
         address payable beneficiaryAddress
     ) {
+        require(beneficiaryAddress != address(0), "zero address set");
         beneficiary = beneficiaryAddress;
         biddingEnd = block.timestamp + biddingTime;
         revealEnd = biddingEnd + revealTime;
