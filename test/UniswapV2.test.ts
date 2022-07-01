@@ -1,4 +1,4 @@
-import { ethers } from "hardhat";
+import { ethers, network } from "hardhat";
 import {
   abi as routerABI,
   address as routerAddress,
@@ -13,16 +13,30 @@ import {
   abi as pairABI,
   address as pairAddress,
 } from "../abis/UniswapV2PairMainnet";
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
 describe("Mainnet Test", () => {
   let router: any;
   let factory: any;
   let pair: any;
+  let signer: SignerWithAddress;
 
   beforeEach(async function () {
     router = await ethers.getContractAt(routerABI, routerAddress);
     factory = await ethers.getContractAt(factoryABI, factoryAddress);
     pair = await ethers.getContractAt(pairABI, pairAddress);
+
+    await network.provider.request({
+      method: "hardhat_impersonateAccount",
+      params: ["0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8"],
+    });
+
+    signer = await ethers.getSigner(
+      "0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8"
+    );
+
+    const balance = await signer.getBalance();
+    console.log("🚀 ~ file: UniswapV2.test.ts ~ line 39 ~ balance", balance);
   });
 
   describe("Uniswap V2 - Router", function () {

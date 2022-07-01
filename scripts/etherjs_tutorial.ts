@@ -159,12 +159,12 @@ async function eventTest() {
 
   console.log(filter);
 
-  provider.on(filter, (result) => {
+  provider.on(filter, (result: any) => {
     console.log(result);
   });
   provider.on(
     { address: "0xe81db2b45cf9c1a93a32a29c5bbc177b028bfa6e" },
-    (result) => {
+    (result: any) => {
       console.log(result);
     }
   );
