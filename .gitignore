@@ -17,3 +17,5 @@ coverage
 coverage.json
 
 test.sol
+
+test.js
